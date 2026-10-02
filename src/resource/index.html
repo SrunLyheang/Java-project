@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="km">
+  <head>
+    <meta charset="UTF-8" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@400;600;700&family=Oswald:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      @page {
+        size: A4 landscape;
+        margin: 0;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: "Kantumruy Pro", sans-serif;
+        color: #1f2937;
+      }
+
+      .certificate {
+        position: relative;
+        width: 297mm;
+        height: 210mm;
+        overflow: hidden;
+        background: #fff;
+        border: 14px solid #fff;
+        outline: 1px solid #d1d5db;
+        outline-offset: -22px;
+      }
+
+      /* maroon/gold wave band, bottom-left */
+      .wave {
+        position: absolute;
+        left: -5%;
+        bottom: -12%;
+        width: 75%;
+        height: 55%;
+        background: linear-gradient(
+          120deg,
+          #7a1d1d 0%,
+          #5c1414 55%,
+          #7a1d1d 100%
+        );
+        border-top: 6px solid #c9a24b;
+        transform: rotate(-8deg);
+        border-radius: 0 100% 0 0;
+      }
+
+      .content {
+        position: relative;
+        z-index: 2;
+        padding: 26mm 30mm 0;
+        text-align: center;
+      }
+
+      .title {
+        font-family: "Oswald", sans-serif;
+        font-size: 46px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        margin: 0;
+        color: #1a1a1a;
+      }
+      .subtitle {
+        font-family: "Oswald", sans-serif;
+        font-size: 20px;
+        letter-spacing: 6px;
+        margin: 2px 0 18px;
+        color: #333;
+      }
+
+      .presented-to {
+        display: inline-block;
+        background: #5c1414;
+        color: #fff;
+        font-size: 13px;
+        letter-spacing: 1px;
+        padding: 6px 22px;
+        border-radius: 14px;
+        margin-bottom: 22px;
+      }
+
+      .names {
+        display: flex;
+        justify-content: center;
+        align-items: baseline;
+        gap: 14px;
+        margin-bottom: 4px;
+      }
+      .name-en {
+        font-size: 30px;
+        font-weight: 600;
+        border-bottom: 1px solid #333;
+        padding: 0 20px 6px;
+        min-width: 260px;
+      }
+      .name-km {
+        font-size: 22px;
+        font-weight: 600;
+        color: #5c1414;
+      }
+
+      .note {
+        max-width: 480px;
+        margin: 18px auto 40px;
+        font-size: 13px;
+        line-height: 1.6;
+        color: #4b5563;
+      }
+
+      .signatures {
+        display: flex;
+        justify-content: center;
+        gap: 100px;
+      }
+      .sig-block {
+        text-align: center;
+      }
+      .sig-line {
+        width: 170px;
+        border-bottom: 1px solid #333;
+        margin-bottom: 6px;
+        height: 20px;
+      }
+      .sig-label {
+        font-size: 13px;
+        font-weight: 600;
+      }
+
+      .badge {
+        position: absolute;
+        right: 34mm;
+        bottom: 22mm;
+        z-index: 3;
+        width: 90px;
+        height: 90px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle at 35% 30%,
+          #e8c877,
+          #c9a24b 60%,
+          #a8802f 100%
+        );
+        border: 3px solid #7a1d1d;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        font-family: "Oswald", sans-serif;
+        color: #5c1414;
+        font-size: 13px;
+        font-weight: 700;
+        line-height: 1.2;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="certificate">
+      <div class="wave"></div>
+
+      <div class="content">
+        <h1 class="title">CERTIFICATE</h1>
+        <div class="subtitle">OF ACHIEVEMENT</div>
+        <div class="presented-to">Proudly present to</div>
+
+        <div class="names">
+          <div class="name-en">{{fullName}}</div>
+          <div class="name-km">{{khmerName}}</div>
+        </div>
+
+        <p class="note">{{note}}</p>
+
+        <div class="signatures">
+          <div class="sig-block">
+            <div class="sig-line"></div>
+            <div class="sig-label">Date</div>
+          </div>
+          <div class="sig-block">
+            <div class="sig-line"></div>
+            <div class="sig-label">Signature</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="badge">Best<br />Award</div>
+    </div>
+  </body>
+</html>

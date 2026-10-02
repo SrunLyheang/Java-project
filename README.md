@@ -8,4 +8,10 @@ Enter your username and get
 Convert the Scanner input to HTML tag
 HTML tag to PDF
 Send PDF!
+#PDF Engine
+This is a java project with 3 members:
+
+- BE Sovannarith
+- SRUN Lyheang
+- SUN Chanmengly
 

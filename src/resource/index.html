@@ -1,10 +1,247 @@
 <!doctype html>
-<html>
+<html lang="km">
   <head>
     <meta charset="UTF-8" />
-    <title>Hello PDF</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@400;600&family=Oswald:wght@500;700&family=Playfair+Display:ital,wght@1,600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      @page {
+        size: A4 landscape;
+        margin: 0;
+      }
+
+      :root {
+        --maroon: #5c1414;
+        --maroon-light: #7a1d1d;
+        --gold: #c9a24b;
+        --ink: #1f2937;
+        --muted: #4b5563;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: "Kantumruy Pro", sans-serif;
+        color: var(--ink);
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .certificate {
+        position: relative;
+        width: 297mm;
+        height: 210mm;
+        overflow: hidden;
+        background: #fff;
+      }
+
+      /* maroon/gold wave along the bottom */
+      .wave {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 297mm;
+        height: 40mm;
+      }
+
+      /* double frame: maroon outer, gold inner */
+      .frame {
+        position: absolute;
+        inset: 8mm;
+        border: 1.5px solid var(--maroon);
+      }
+      .frame::after {
+        content: "";
+        position: absolute;
+        inset: 2mm;
+        border: 0.6px solid var(--gold);
+      }
+
+      .content {
+        position: absolute;
+        top: 34mm;
+        left: 30mm;
+        right: 30mm;
+        text-align: center;
+      }
+
+      .title {
+        font-family: "Oswald", sans-serif;
+        font-size: 50px;
+        font-weight: 700;
+        letter-spacing: 10px;
+        line-height: 1;
+        margin: 0;
+        color: #1a1a1a;
+      }
+      .subtitle {
+        font-family: "Oswald", sans-serif;
+        font-size: 18px;
+        font-weight: 500;
+        letter-spacing: 8px;
+        margin: 8px 0 22px;
+        color: var(--gold);
+      }
+
+      .presented-to {
+        display: inline-block;
+        background: var(--maroon);
+        color: #fff;
+        font-size: 12px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        padding: 6px 24px;
+        border-radius: 999px;
+      }
+
+      /* Latin glyphs use Playfair, Khmer glyphs fall back to Kantumruy Pro */
+      .name {
+        width: 200mm;
+        margin: 14px auto 0;
+        padding: 0 4mm 2mm;
+        font-family: "Playfair Display", "Kantumruy Pro", serif;
+        font-style: italic;
+        font-weight: 600;
+        font-size: 56px;
+        line-height: 1.5;
+        color: var(--maroon);
+        white-space: nowrap;
+        overflow: hidden;
+        border-bottom: 1px solid var(--gold);
+      }
+
+      .note {
+        max-width: 150mm;
+        margin: 16px auto 0;
+        font-size: 14px;
+        line-height: 1.7;
+        color: var(--muted);
+      }
+
+      .sig-block {
+        position: absolute;
+        bottom: 48mm;
+        width: 62mm;
+        text-align: center;
+      }
+      .sig-block.left {
+        left: 42mm;
+      }
+      .sig-block.right {
+        right: 42mm;
+      }
+      .sig-value {
+        height: 9mm;
+        font-size: 15px;
+        line-height: 9mm;
+        border-bottom: 1px solid #333;
+      }
+      .sig-label {
+        margin-top: 6px;
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+      }
+
+      .seal {
+        position: absolute;
+        left: 50%;
+        bottom: 30mm;
+        width: 32mm;
+        height: 32mm;
+        margin-left: -16mm;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle at 35% 30%,
+          #ecd28a,
+          var(--gold) 60%,
+          #a8802f 100%
+        );
+        border: 2px solid var(--maroon-light);
+        box-shadow: 0 0 0 3px #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .seal-inner {
+        width: 25mm;
+        height: 25mm;
+        border-radius: 50%;
+        border: 1px dashed var(--maroon);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        font-family: "Oswald", sans-serif;
+        font-size: 14px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        line-height: 1.15;
+        color: var(--maroon);
+      }
+    </style>
   </head>
   <body>
-    <h1>Hello, {{name}}!</h1>
+    <div class="certificate">
+      <svg class="wave" viewBox="0 0 297 40" aria-hidden="true">
+        <path
+          d="M0 16 C70 2 115 30 148.5 24 C185 17 230 4 297 18 V40 H0 Z"
+          fill="#5c1414"
+        />
+        <path
+          d="M0 11 C70 -3 115 25 148.5 19 C185 12 230 -1 297 13"
+          fill="none"
+          stroke="#c9a24b"
+          stroke-width="1.2"
+        />
+      </svg>
+
+      <div class="frame"></div>
+
+      <main class="content">
+        <h1 class="title">CERTIFICATE</h1>
+        <div class="subtitle">OF ACHIEVEMENT</div>
+        <div class="presented-to">Proudly presented to</div>
+
+        <div class="name">{{fullName}}</div>
+
+        <p class="note">
+          In recognition of outstanding dedication, effort, and achievement.
+        </p>
+      </main>
+
+      <div class="sig-block left">
+        <div class="sig-value">{{date}}</div>
+        <div class="sig-label">Date</div>
+      </div>
+      <div class="sig-block right">
+        <div class="sig-value"></div>
+        <div class="sig-label">Signature</div>
+      </div>
+
+      <div class="seal">
+        <div class="seal-inner">BEST<br />AWARD</div>
+      </div>
+    </div>
+
+    <script>
+      // Shrink long names until they fit on one line
+      document.fonts.ready.then(() => {
+        const el = document.querySelector(".name");
+        let size = parseFloat(getComputedStyle(el).fontSize);
+        while (el.scrollWidth > el.clientWidth && size > 20) {
+          el.style.fontSize = --size + "px";
+        }
+      });
+    </script>
   </body>
 </html>

@@ -2,3 +2,10 @@ out/*
 *.class
 *.pdf
 target/
+
+# Sorry that my nvim sucks and idk how to fix it :(
+bin/*
+.project
+.classpath
+.settings
+

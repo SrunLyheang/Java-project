@@ -3,6 +3,7 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 import com.microsoft.playwright.options.LoadState;
 
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Scanner;
 
@@ -18,7 +19,15 @@ public class Main{
     // This is a function that will return a valid HTML
     String html = ConvertHTML.convertToHTML(name, date);
 
-    Path outputPath = Path.of(System.getProperty("user.home"), "Desktop", "certificate.pdf");
+    Path outputDir = Path.of(System.getProperty("user.home"), "Desktop");
+    Files.createDirectories(outputDir); //make sure desktop exist before sending the file
+
+    Path outputPath = outputDir.resolve("certificate.pdf");
+    int n = 1;
+    while (Files.exists(outputPath)) { // don't overwrite an existing certificate, add a number instead
+      n++;
+      outputPath = outputDir.resolve("certificate-" + n + ".pdf");
+    }
 
     // Render the HTML in headless Chromium and print it to PDF
     try (Playwright playwright = Playwright.create();
@@ -31,10 +40,9 @@ public class Main{
       options.setPath(outputPath);
       options.setPrintBackground(true); //include background colours and images
       options.setPreferCSSPageSize(true); // uses @page size from  HTML
-      page.pdf(options); 
+      page.pdf(options);
     }
 
     System.out.println("Saved to " + outputPath);
   }
 }
-

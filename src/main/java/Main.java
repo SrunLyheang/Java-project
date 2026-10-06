@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 public class Main{
   public static boolean check(String name) {
-    return name.matches("[A-Z][a-z]* [A-Z][a-z]*");
+    return name.matches("^[A-Z][a-z]+(\\s[A-Z][a-z]+)*$");
   }
 
   public static boolean datecheck(String dateInput) {

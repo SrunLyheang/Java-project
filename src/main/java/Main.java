@@ -5,19 +5,64 @@ import com.microsoft.playwright.options.LoadState;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.DateTimeException;
+import java.time.LocalDate;
 import java.util.Scanner;
 
 public class Main{
+  public static boolean check(String name) {
+    return name.matches("^[A-Z][a-z]+(\\s[A-Z][a-z]+)*$");
+  }
+
+  public static boolean datecheck(String dateInput) {
+    String normalizedDate = dateInput.trim();
+    if (!normalizedDate.matches("[0-9]{2}/[0-9]{2}/[0-9]{4}")) {
+      return false;
+    }
+
+    String[] date = normalizedDate.split("/");
+    try {
+      int day = Integer.parseInt(date[0]);
+      int month = Integer.parseInt(date[1]);
+      int year = Integer.parseInt(date[2]);
+      if (year == 0) {
+        return false;
+      }
+      LocalDate.of(year, month, day);
+      return true;
+    } catch (DateTimeException | NumberFormatException e) {
+      return false;
+    }
+  }
+
   public static void main(String[] args) throws java.io.IOException {
-    Scanner scanner = new Scanner(System.in);
-    System.out.print("Enter Your name: ");
-    String name = scanner.nextLine();
-    System.out.print("Enter a Date: ");
-    String date = scanner.nextLine();
-    scanner.close();
+    Scanner input = new Scanner(System.in);
+
+    String Name;
+    while (true) {
+      System.out.print("Enter Name: ");
+      Name = input.nextLine().trim();
+      if (check(Name)) {
+        break;
+      }
+      System.out.println("Invalid Name!! Please try again.");
+    }
+
+    String Date;
+    while (true) {
+      System.out.print("Enter Date: (DD/MM/YYYY): ");
+      Date = input.nextLine().trim();
+      if (datecheck(Date)) {
+        break;
+      }
+      System.out.println("Invalid Date!! Please try again.");
+    }
+
+    input.close();
+    System.out.println("Date: " + Date);
 
     // This is a function that will return a valid HTML
-    String html = ConvertHTML.convertToHTML(name, date);
+    String html = ConvertHTML.convertToHTML(Name, Date);
 
     Path outputDir = Path.of(System.getProperty("user.home"), "Desktop");
     Files.createDirectories(outputDir); //make sure desktop exist before sending the file

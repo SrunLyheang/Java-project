@@ -1,4 +1,5 @@
 import com.microsoft.playwright.Browser;
+import com.microsoft.playwright.BrowserType;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 import com.microsoft.playwright.options.LoadState;
@@ -29,9 +30,21 @@ public class Main{
       outputPath = outputDir.resolve("certificate-" + n + ".pdf");
     }
 
+    // Use the system PATH if the execution fail
+    // MUST have chrome or chromium installed!
+    // the PATH name MUST be CHROMIUM_PATH that points to chromium!
+    String chromePath = System.getenv("CHROMIUM_PATH");
+    BrowserType.LaunchOptions opts = new BrowserType.LaunchOptions();
+
+    if (chromePath != null && !chromePath.isBlank()) {
+      opts.setExecutablePath(Path.of(chromePath));
+    };
+
     // Render the HTML in headless Chromium and print it to PDF
-    try (Playwright playwright = Playwright.create();
-        Browser browser = playwright.chromium().launch()) {
+    try (
+        Playwright playwright = Playwright.create();
+        Browser browser = playwright.chromium().launch(opts);
+        ) {
       Page page = browser.newPage(); //new tab
       page.setContent(html);
       page.waitForLoadState(LoadState.NETWORKIDLE); // wait for Google Fonts
@@ -46,3 +59,4 @@ public class Main{
     System.out.println("Saved to " + outputPath);
   }
 }
+

@@ -20,6 +20,11 @@
             <!-- check Maven Central for the latest version -->
             <version>1.49.0</version>
         </dependency>
+        <dependency>
+          <groupId>org.tomlj</groupId>
+          <artifactId>tomlj</artifactId>
+          <version>2.2.0</version>
+        </dependency>
     </dependencies>
 
     <build>

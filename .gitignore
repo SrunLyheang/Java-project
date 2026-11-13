@@ -9,3 +9,10 @@ bin/*
 .classpath
 .settings
 
+# for my personal stuff in the project
+Tasks.md
+
+# Tests
+test*
+Test*
+

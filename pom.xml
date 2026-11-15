@@ -3,7 +3,6 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <groupId>com.example</groupId>
     <artifactId>html-to-pdf</artifactId>
     <version>1.0</version>
@@ -35,6 +34,11 @@
                 <version>3.5.0</version>
                 <configuration>
                     <mainClass>Main</mainClass>
+                    <!-- just make this file exist with the most basic stuff -->
+                    <arguments>
+                      <argument>Test.html</argument>
+                      <argument>test.toml</argument>
+                    </arguments>
                 </configuration>
             </plugin>
         </plugins>

@@ -33,6 +33,31 @@ public class Main{
   }
 
   public static void main(String[] args) throws java.io.IOException {
+
+    // Check for arguments
+    if (args.length < 2) {
+      System.err.println("How to use: mvn exec:java -Dexec.args='[HTML file path] [TOML file path] [JSON file path](Optional)'");
+      return;
+    }
+
+    Path HTMLPath = Path.of(args[0]);
+    Path TOMLPath = Path.of(args[1]);
+
+    if (!Files.isRegularFile(HTMLPath)) {
+      System.err.println("HTML file path does not exist!");
+      return;
+    }
+
+    if (!Files.isRegularFile(TOMLPath)) {
+      System.err.println("TOML file path does not exist!");
+      return;
+    }
+
+    System.out.println("Success!");
+
+    // TODO: loop through this one and create the input varyingly
+    EvaluateTOML.evaluate(TOMLPath, HTMLPath);
+
     Scanner input = new Scanner(System.in);
 
     String Name;

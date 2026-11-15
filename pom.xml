@@ -36,8 +36,8 @@
                     <mainClass>Main</mainClass>
                     <!-- just make this file exist with the most basic stuff -->
                     <arguments>
-                      <argument>Test.html</argument>
-                      <argument>test.toml</argument>
+                      <argument>src/resource/index.html</argument>
+                      <argument>dummy.toml</argument>
                     </arguments>
                 </configuration>
             </plugin>

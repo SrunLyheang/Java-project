@@ -53,8 +53,6 @@ public class Main{
       return;
     }
 
-    System.out.println("Success!");
-
     // TODO: loop through this one and create the input varyingly
     EvaluateTOML.evaluate(TOMLPath, HTMLPath);
 

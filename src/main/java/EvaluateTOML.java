@@ -2,6 +2,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.tomlj.Toml;
@@ -88,9 +89,16 @@ public class EvaluateTOML {
         TomlTable items = input.getTable(i);
 
         String variable = items.getString("variable");
-        Boolean hasPlaceholder = variable.matches("^\\{\\{\\w+\\}\\}$");
+        String variableRegex = "^\\{\\{(\\w+)\\}\\}$";
+        if (variable == null) throw new AssertionError("Variable must exist!");
+        Boolean hasPlaceholder = variable.matches(variableRegex);
         if (!hasPlaceholder) throw new AssertionError("Variables should be in {{name}} only! Error at input " + i);
         if (!htmlContents.contains(variable)) throw new AssertionError("Variable doesn't exist in HTML! Error at input " + i);
+
+        // This would take the word inside the {{}}
+        Pattern pattern = Pattern.compile(variableRegex);
+        Matcher matcher = pattern.matcher(variable);
+        if (matcher.matches()) variable = matcher.group(1);
 
         String regex = items.getString("regex");
         if (!isValidRegex(regex)) throw new AssertionError("Invalid Regex! Error at input " + i);

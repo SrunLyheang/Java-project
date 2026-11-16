@@ -48,7 +48,7 @@ public class EvaluateTOML {
       }
   }
 
-  private static Boolean isValidDateFormat(String pattern, String dateStr) {
+  public static Boolean isValidDateFormat(String pattern, String dateStr) {
     try {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern).withResolverStyle(ResolverStyle.STRICT);
 
@@ -100,7 +100,7 @@ public class EvaluateTOML {
         Matcher matcher = pattern.matcher(variable);
         if (matcher.matches()) variable = matcher.group(1);
 
-        String regex = items.getString("regex");
+        String regex = items.getString("regex", () -> "");
         if (!isValidRegex(regex)) throw new AssertionError("Invalid Regex! Error at input " + i);
 
         String type = items.getString("type", () -> "string");

@@ -4,6 +4,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.DateTimeException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main{
@@ -53,11 +55,71 @@ public class Main{
       return;
     }
 
-    // TODO: loop through this one and create the input varyingly
-    EvaluateTOML.evaluate(TOMLPath, HTMLPath);
+    List<EvaluateTOML.RecordInputs> recordInputs = EvaluateTOML.evaluate(TOMLPath, HTMLPath);
 
-    Scanner input = new Scanner(System.in);
+    // If it has null
+    // We know it has failed the test, so don't run the code
+    if (recordInputs.contains(null)) return;
 
+    Scanner getInput = new Scanner(System.in);
+
+    List<String> variables = new ArrayList<>();
+    List<String> results = new ArrayList<>();
+    for (EvaluateTOML.RecordInputs record : recordInputs) {
+      while (true) {
+        String v = record.input();
+
+        // These are type checks
+        // if the type is date then we'll do more stuff
+        String[] st = record.type().split(" ");
+        String t = st[0];
+        String f = null;
+        if (st.length > 1) f = st[1];
+
+        if (t.equals("date")) {
+          String fc = f;
+          fc = fc.replaceAll("u", "Y");
+          fc = fc.replaceAll("d", "D");
+
+          System.out.print("Enter " + v + " (" + fc + "): ");
+        } else {
+          System.out.print("Enter " + v + ": ");
+        }
+        String var = getInput.nextLine().trim();
+
+        // If it is not optional
+        // Don't permit empty even if they declared that way
+        if (!record.isOptional()) {
+          if (var.isEmpty()) {
+            System.out.println(v + " cannot be empty!");
+            continue;
+          }
+        }
+
+        // Check if it actually matches the regex
+        if (var.matches(record.regex())) {
+          if (t.equals("date")) {
+            Boolean hasCorrectFormat = EvaluateTOML.isValidDateFormat(f, var);
+
+            if (!hasCorrectFormat) {
+              System.out.println("Invalid date in " + v + "!");
+              continue;
+            }
+          }
+          variables.add(v);
+          results.add(var);
+          break;
+        }
+
+        System.out.println("Invalid " + v + "! Please try again.");
+      }
+    }
+
+    getInput.close();
+
+    String html = ConvertHTML.convertToHTML(variables, results, HTMLPath);
+
+    /*
     String Name;
     while (true) {
       System.out.print("Enter Name: ");
@@ -82,6 +144,7 @@ public class Main{
 
     // This is a function that will return a valid HTML
     String html = ConvertHTML.convertToHTML(Name, Date);
+    */
 
     Path outputDir = Path.of(System.getProperty("user.home"), "Desktop");
     Files.createDirectories(outputDir); //make sure desktop exist before sending the file
